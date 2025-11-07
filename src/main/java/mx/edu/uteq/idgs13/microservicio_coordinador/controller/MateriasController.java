@@ -1,0 +1,30 @@
+package mx.edu.uteq.idgs13.microservicio_coordinador.controller;
+
+import mx.edu.uteq.idgs13.microservicio_coordinador.dto.MateriasDto;
+import mx.edu.uteq.idgs13.microservicio_coordinador.service.MateriasService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/materias")
+@CrossOrigin(origins = "*")
+public class MateriasController {
+
+    @Autowired
+    private MateriasService materiasService;
+
+    @GetMapping
+    public ResponseEntity<List<MateriasDto>> getAllMaterias() {
+        List<MateriasDto> materias = materiasService.getAllMaterias();
+        return ResponseEntity.ok(materias);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MateriasDto> getMateriaById(@PathVariable Long id) {
+        MateriasDto materia = materiasService.getMateriaById(id);
+        return materia != null ? ResponseEntity.ok(materia) : ResponseEntity.notFound().build();
+    }
+}
